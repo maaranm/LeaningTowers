@@ -14,10 +14,10 @@ public class Main {
 		GamePanel game = new GamePanel();
 		frame.setSize(GameConstants.width, GameConstants.height);
 		frame.setVisible(true);
-		frame.setBackground(Color.gray);
+		frame.setBackground(Color.white);
 		frame.setContentPane(game);
-		frame.addKeyListener(new GamePanel());
-		
+		game.addKeyListener(game);
+		game.requestFocus();		
 		while(true){
 			game.run();
 		}

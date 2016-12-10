@@ -1,9 +1,10 @@
 package game;
 
+import java.awt.Point;
+
 public abstract class Pieces {
-	int curPosX;
-	int curPosY;
-	int curRotation;
+	int curPosX, curPosY, curRotation;
+	Point[] corners;
 	public static boolean finished;
 	public Pieces(){
 		curPosX = 200;
@@ -36,6 +37,8 @@ public abstract class Pieces {
 	}
 	
 	public abstract int updateRotation();
+	
+	public abstract Point[] boundaries();
 	
 	public int getRotation(){
 		return curRotation;

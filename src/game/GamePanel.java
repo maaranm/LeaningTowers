@@ -20,18 +20,20 @@ public class GamePanel extends JPanel implements KeyListener{
 	
 	@Override
 	public void paintComponent(Graphics g){
+		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
-		g.drawRect(200, square.curPosY, 100, 100);
+		g.drawRect(square.curPosX, square.curPosY, 100, 100);
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
 		char key = e.getKeyChar();
+		System.out.println(key);
 		if(key == 'a'){
-			square.updatePos(-1);
+			square.updatePos(-100);
 		}
 		else if(key == 'd'){
-			square.updatePos(1);
+			square.updatePos(100);
 		}
 		
 	}
