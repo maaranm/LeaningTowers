@@ -32,6 +32,8 @@ public class TicTacToe implements Grid{
 	}
 	@Override
 	public boolean newMove(int x, int y, int playerNum){
+		if(!((x >= 0 && x < 3) && (y >= 0 && y < 3)))
+			return false;
 		if(playerNum == 0)
 			moves[x][y] = 2;
 		else if(playerNum == 1)
@@ -39,10 +41,7 @@ public class TicTacToe implements Grid{
 		else
 			moves[x][y] = 2;
 		moveCounter++;
-		if((x > 0 && x < 3) && (y > 0 && y < 3))
-			return true;
-		else
-			return false;
+		return true;
 	}
 	@Override
 	public boolean check(int playerNum){
