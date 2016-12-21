@@ -70,4 +70,9 @@ public class TicTacToe extends Game implements Grid{
 	public void clearGameBoard() {
 		reset();
 	}
+
+	@Override
+	public void updateBoard(int x, int y, char move) {
+		
+	}
 }

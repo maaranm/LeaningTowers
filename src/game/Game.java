@@ -4,7 +4,9 @@ public abstract class Game {
 	char[][] gameBoard;
 	char[][] playerMoves;
 	int xSize, ySize;
+	int counter;
 	public Game(int x, int y){
+		counter = 0;
 		xSize = x; ySize = y;
 		gameBoard = new char[x][y];
 		for(int i = 0; i<x; i++){

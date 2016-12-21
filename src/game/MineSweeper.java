@@ -10,9 +10,25 @@ public class MineSweeper extends Game implements Grid{
 		while(curNumOfBombs<numOfBombs){
 			xPos = (int)(Math.random()*10);
 			yPos = (int)(Math.random()*10);
-			if(gameBoard[xPos][yPos] == 'e'){
-				gameBoard[xPos][yPos] = 'b';
+			if(gameBoard[xPos][yPos] == 'E'){
+				gameBoard[xPos][yPos] = 'B';
 				curNumOfBombs++;
+			}
+		}
+		for(int i = 0; i<20; i++){
+			for(int j = 0; j<20; j++){
+				if(gameBoard[i][j] == 'E'){
+					for(int k = 0; k<3; k++){
+						for(int a = 0; a<3; a++){
+							if(gameBoard[i+k-2][i+a-2] == 'B')
+								counter++;
+								
+						}
+					}
+				}
+				gameBoard[i][j] = (char)(counter + 48);
+				if(gameBoard[i][j] == '0')
+					gameBoard[i][j] = 'E';
 			}
 		}
 		playerMoves = gameBoard;
@@ -28,11 +44,12 @@ public class MineSweeper extends Game implements Grid{
 		if(!(checkValid(x, y, this.gameBoard)))
 			return false;
 		if(playerNum == 0){
-			moveType = 'f';
+			moveType = 'F';
 		}
 		else{
-			moveType = 'o';
+			moveType = 'O';
 		}
+		updateBoard(x,y,moveType);
 		playerMoves[x][y] = moveType;
 		return true;
 		
@@ -45,6 +62,18 @@ public class MineSweeper extends Game implements Grid{
 	@Override
 	public void clearGameBoard() {
 		reset();
+	}
+	@Override
+	public void updateBoard(int x, int y, char move) {
+		int xCounter = 0;
+		int yCounter = 0;
+		while(true){
+			if(gameBoard[x+xCounter][y] == 'E')
+			{
+				
+			}
+				
+		}
 	}
 	
 }
