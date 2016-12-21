@@ -1,19 +1,14 @@
 package game;
 
-public class TicTacToe implements Grid{
-	int [][] moves = new int[3][3];
+public class TicTacToe extends Game implements Grid{
 	boolean twoPlayer;
 	boolean cpuMove;
 	int moveCounter;
 	public TicTacToe(boolean twoPlayer){
+		super(3,3);
 		moveCounter = 0;
 		cpuMove = false;
 		this.twoPlayer = twoPlayer;
-		for(int i = 0; i<3; i++){
-			for(int j = 0; j<3; j++){
-				moves[i][j] = 0;
-			}
-		}
 	}
 	
 	public boolean isPlayerOne(){
@@ -30,34 +25,37 @@ public class TicTacToe implements Grid{
 				return true;
 		}
 	}
+	
 	@Override
 	public boolean newMove(int x, int y, int playerNum){
-		if(!((x >= 0 && x < 3) && (y >= 0 && y < 3)))
+		if(!(checkValid(x, y, this.gameBoard)))
 			return false;
 		if(playerNum == 0)
-			moves[x][y] = 2;
+			playerMoves[x][y] = 'X';
 		else if(playerNum == 1)
-			moves[x][y] = 1;
+			playerMoves[x][y] = 'O';
 		else
-			moves[x][y] = 2;
+			playerMoves[x][y] = 'X';
 		moveCounter++;
 		return true;
 	}
+	
+	
 	@Override
 	public boolean check(int playerNum){
 		for(int i = 0; i < 3; i++){
-			if(moves[i][0] == moves[i][1] && moves[i][2] == moves[i][0] && moves[i][0] == playerNum) //checks for vertical wins
+			if(playerMoves[i][0] == playerMoves[i][1] && playerMoves[i][2] == playerMoves[i][0] && playerMoves[i][0] == playerNum) //checks for vertical wins
 				return true;
 		}
 		for(int i = 0; i < 3; i++){
-			if(moves[0][i] == moves[1][i] && moves[2][i] == moves[0][i] && moves[0][i] == playerNum) //checks for horizontal wins
+			if(playerMoves[0][i] == playerMoves[1][i] && playerMoves[2][i] == playerMoves[0][i] && playerMoves[0][i] == playerNum) //checks for horizontal wins
 				return true;
 		}
 		
-		if(moves[0][0] == moves[1][1] && moves[2][2] == moves[0][0] && moves[0][0] == playerNum) //checks for one diagonal win
+		if(playerMoves[0][0] == playerMoves[1][1] && playerMoves[2][2] == playerMoves[0][0] && playerMoves[0][0] == playerNum) //checks for one diagonal win
 			return true;
 		
-		if(moves[0][2] == moves[1][1] && moves[0][2] == moves[2][0] && moves[0][2] == playerNum) //checks for other diagonal win
+		if(playerMoves[0][2] == playerMoves[1][1] && playerMoves[0][2] == playerMoves[2][0] && playerMoves[0][2] == playerNum) //checks for other diagonal win
 			return true;
 		
 		return false;
@@ -65,17 +63,11 @@ public class TicTacToe implements Grid{
 
 	@Override
 	public char[][] getGameBoard() {
-		char[][] game = new char[3][3];
-		for(int i=0;i<3;i++){
-			for(int j=0;j<3;j++){
-				if(moves[i][j] == 0)
-					game[i][j] = 'N';
-				else if(moves[i][j] == 1)
-					game[i][j] = 'X';
-				else
-					game[i][j] = 'O';
-			}
-		}
-		return game;
+		return playerMoves;
+	}
+
+	@Override
+	public void clearGameBoard() {
+		reset();
 	}
 }
