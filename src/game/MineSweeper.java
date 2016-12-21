@@ -1,11 +1,13 @@
 package game;
 
 public class MineSweeper extends Game implements Grid{
-	int numOfBombs = 10;
+	int numOfBombs = 20;
 	int curNumOfBombs;
-	int xPos, yPos;
+	int xPos, yPos, oldX, oldY, flagCounter;
+	boolean firstClick;
 	public MineSweeper(){
 		super(20,20);
+		firstClick = false;
 		curNumOfBombs = 0;
 		while(curNumOfBombs<numOfBombs){
 			xPos = (int)(Math.random()*10);
@@ -50,13 +52,22 @@ public class MineSweeper extends Game implements Grid{
 			moveType = 'O';
 		}
 		updateBoard(x,y,moveType);
-		playerMoves[x][y] = moveType;
+		oldX = x; oldY = y;
 		return true;
-		
 	}
 	@Override
 	public boolean check(int playerNum) {
-		// TODO Auto-generated method stub
+		flagCounter = 0;
+		for(int i = 0; i<20; i++){
+			for(int j = 0; j<20; j++){
+				if(playerMoves[i][j]=='E')
+					break;
+				else if(playerMoves[i][j] == 'F')
+					flagCounter++;
+			}
+		}
+		if(flagCounter == numOfBombs)
+			return true;
 		return false;
 	}
 	@Override
@@ -65,15 +76,25 @@ public class MineSweeper extends Game implements Grid{
 	}
 	@Override
 	public void updateBoard(int x, int y, char move) {
-		int xCounter = 0;
-		int yCounter = 0;
-		while(true){
-			if(gameBoard[x+xCounter][y] == 'E')
-			{
-				
+		if(move == 'O'){
+			playerMoves[x][y] = 'O';
+			if((firstClick || Distance(x,y,oldX,oldY) > 8) && gameBoard[x][y] == 'E'){
+				for(int i = 0; i<7; i++){
+					for(int  j = 0; j<7; j++){
+						if(gameBoard[x+i-4][y+j-4] == 'E')
+							playerMoves[x+i-4][y+j-4] = 'O';
+						else if(gameBoard[x+i-4][y+j-4] != 'B')
+							playerMoves[x+i-4][y+j-4] = 'O';
+							break;
+					}
+				}
 			}
-				
+			else{
+				playerMoves[x][y] = gameBoard[x][y];
+			}
+		}
+		else{
+			playerMoves[x][y] = 'F';
 		}
 	}
-	
 }

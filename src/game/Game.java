@@ -33,4 +33,9 @@ public abstract class Game {
 		}
 		playerMoves = gameBoard;
 	}
+	
+	public int Distance(int xOne, int yOne, int xTwo, int yTwo){
+		int distance = (int) Math.sqrt(Math.pow(xOne-xTwo, 2)+Math.pow(yOne-yTwo, 2));
+		return distance;
+	}
 }
