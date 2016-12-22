@@ -20,7 +20,7 @@ public class Main{
 		frame.setLayout(new BorderLayout());
 		Scanner sc = new Scanner(System.in);
 		while(true){
-			try {
+			try { // used to add temp delay
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
