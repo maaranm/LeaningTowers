@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 //implements the actual running of the tictactoe class
 public class TicTacToePanel extends JPanel implements ActionListener{
+	Game exampleOfDownCasting = new TicTacToe(true);
 	TicTacToe game; //game object
 	boolean winner;
 	String playerName;
@@ -25,6 +26,7 @@ public class TicTacToePanel extends JPanel implements ActionListener{
 	GridLayout layout; //layout object for the JPanel
 	
 	public TicTacToePanel(boolean twoPlayer){
+		System.out.println(((TicTacToe)(exampleOfDownCasting)).check(1));
 		quit = false;
 		winner = false;
 		winLabel = new JLabel();
