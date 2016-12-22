@@ -6,7 +6,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
-
+//not used anymore
+//menu screen for both games
 public class MenuScreen extends JPanel implements ActionListener{
 	boolean playMineSweeper, playTicTac;
 	public MenuScreen(){

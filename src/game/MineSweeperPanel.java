@@ -1,10 +1,11 @@
 package game;
 
 import java.util.Scanner;
-
+//used to actually run the minesweeper game
 public class MineSweeperPanel {
-	boolean [][] clicked;
-	boolean quit;
+	//Declare variables for class wide use
+	boolean [][] clicked; //to keep track of what to display 
+	boolean quit; //constantly checked by Main to see whether it should exit or not
 	int xMove, yMove;
 	char moveType;
 	MineSweeper gameInfo;
@@ -14,8 +15,8 @@ public class MineSweeperPanel {
 	public MineSweeperPanel(){
 		quit = false;
 		game = (MineSweeper)game; //downcast!!!!!
-		clicked = new boolean[20][20];
-		for(int i = 0; i<20; i++){
+		clicked = new boolean[20][20]; //20 by 20 because that is the size of the mine sweeper panel
+		for(int i = 0; i<20; i++){ //iterate through elements
 			for(int j = 0; j<20; j++){
 				clicked[i][j] = false;
 			}
@@ -24,30 +25,38 @@ public class MineSweeperPanel {
 		System.out.println("Please note that the top right corner of the grid is 0 x 0 and the grid is 19 x 19");
 		System.out.println("There are 25 bombs on the field");
 		System.out.println("E stands for empty");
-		gameInfo = new MineSweeper();
-		userIn = new Scanner(System.in);
+		gameInfo = new MineSweeper(); //minesweeper object
+		userIn = new Scanner(System.in); //scanner object
 	}
 	
-	public void run(){
-		if(!gameInfo.dead){
-			drawPlayerBoard();
+	public void run(){ //constantly called by Main class
+		if(!gameInfo.dead && !gameInfo.check(0)){ //if the game is still in regular state
+			//calls a variety of game functions
+			drawPlayerBoard(); 
 			getMove();
-			clicked[xMove][yMove] = true;
-			int typeOfMove = (moveType == 'F')? 0:1;
-			gameInfo.newMove(xMove, yMove, typeOfMove);
+			clicked[xMove][yMove] = true; //set the current tile to clicked
+			int typeOfMove = (moveType == 'F')? 0:1; //use ternary operator to determine what kind of move it is
+			gameInfo.newMove(xMove, yMove, typeOfMove); //set new move
 		}
-		else if(!displayed){
+		else if(!displayed && gameInfo.dead){ //if you clicked a bomb draw the game board one last time
 			drawPlayerBoard();
 			System.out.println("Waa Waa You Lost... You're bad");
 			displayed = true;
 			System.out.println("Taking you back to the main menu now!");
 			quit = true;
 		}
+		else if(!displayed){ //if you won (Very unlikely) draws the game board one last time
+			drawPlayerBoard();
+			System.out.println("YAYYYY! You Won!");
+			displayed = true;
+			System.out.println("Taking you back to the main menu now!");
+			quit = true;
+		}
 	}
 	
-	public void drawPlayerBoard(){
-		char[][] playerMoves = gameInfo.getPlayerMove();
-		for(int i = 0; i<20; i++){
+	public void drawPlayerBoard(){ //used to draw the gameBoard which contains the players moves
+		char[][] playerMoves = gameInfo.getPlayerMove(); //local char array
+		for(int i = 0; i<20; i++){//iterate through the array elements
 			for(int j = 0; j<20; j++){
 				if(!clicked[i][j])
 					System.out.print(" _ ");
@@ -58,7 +67,7 @@ public class MineSweeperPanel {
 		}
 		System.out.println("\n");
 	}
-	
+	//simple function for prompting users for proper inputs
 	public void getMove(){
 		System.out.println("What is your move?");
 		do{
